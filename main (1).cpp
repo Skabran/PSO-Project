@@ -107,19 +107,19 @@ int main()
     time_t t;
     srand((unsigned) time(&t));
 
-    float xmin[30], xmax[30];
-    float initpop[50][30];
+    float xmin[numofdims], xmax[numofdims];
+    float initpop[numofparticles][numofdims];
     float worsts[1000], bests[1000];
     float meanfits[1000];
     float gbestfit;
-    float gbest[30];
-    for(int i = 0; i < 30; i++)
+    float gbest[numofdims];
+    for(int i = 0; i < numofdims; i++)
     {
         xmax[i] = 100;
         xmin[i] = -100;
     }
-    for(int i = 0; i < 50; i++)
-        for(int j = 0; j < 30; j++)
+    for(int i = 0; i < numofparticles; i++)
+        for(int j = 0; j < numofdims; j++)
         {
             initpop[i][j] = rand() % (100 + 100 + 1) - 100;
         }

@@ -1,0 +1,44 @@
+#include <cmath>
+
+float BentCigar(float v[numofdims], int numofdims)
+{
+    float X1Carre = v[0]*v[0]; // x1²
+    float Somme = 0
+    for (int i = 1; i < numofdims; i++)
+    {
+        Somme += v[i]*v[i];
+    }
+    return X1Carre + 1000000 * Somme;
+}
+
+
+
+float Discus(float v[numofdims], int numofdims)
+{
+    float X1Carre = v[0]*v[0]; // x1²
+    float Somme = 0
+    for (int i = 1; i < numofdims; i++)
+    {
+        Somme += v[i]*v[i];
+    }
+    return 1000000 * X1Carre + Somme;
+}
+
+float SousSommeWeierstrass(float x, float a, int kmax)
+{
+    float Somme {0};
+    for (int k = 0; k < kmax; i++)
+    {
+        Somme += pow(a,k) * cos(2 * Pi * pow(b,k) * (x+0.5))
+    }
+    return Somme;
+}
+
+float Weierstrass(float v[numofdims], int numofdims, float a = 0.5, float b = 3, int kmax = 20)
+{
+    float Somme {0};
+    for (int i = 0; i < numofdims; i++)
+    {
+        Somme += SousSommeWeierstrass(v[i],a,kmax) - numofdims * SousSommeWeiestrass(0.0,a,kmax);
+    }
+}

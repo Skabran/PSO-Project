@@ -2,7 +2,7 @@
 
 float BentCigar(float v[numofdims], int numofdims)
 {
-    float X1Carre = v[0]*v[0]; // x1�
+    float X1Carre = v[0]*v[0]; // x1²
     float Somme = 0
     for (int i = 1; i < numofdims; i++)
     {
@@ -15,7 +15,7 @@ float BentCigar(float v[numofdims], int numofdims)
 
 float Discus(float v[numofdims], int numofdims)
 {
-    float X1Carre = v[0]*v[0]; // x1�
+    float X1Carre = v[0]*v[0]; // x1²
     float Somme = 0
     for (int i = 1; i < numofdims; i++)
     {
@@ -34,11 +34,63 @@ float SousSommeWeierstrass(float x, float a, int kmax)
     return Somme;
 }
 
-float Weierstrass(float v[numofdims], int numofdims, float a = 0.5, float b = 3, int kmax = 20)
+float Weierstrass(float v[numofdims], int numofdims /* <- possible? Numofdims n'est-il pas une constante?*/, float a = 0.5, float b = 3, int kmax = 20)
 {
     float Somme {0};
     for (int i = 0; i < numofdims; i++)
     {
         Somme += SousSommeWeierstrass(v[i],a,kmax) - numofdims * SousSommeWeiestrass(0.0,a,kmax);
     }
+}
+
+//En supposant que toutes les fonctions précédentes soient juste je me permet d'avancer et d'implémenter les suivantes.
+//Il faudra bien penser à tout vérifier. Fonction par fonction (je tape juste le texte ici)
+// ajouter le 17/12/2019 à 17:30:
+
+//retourne la sous somme dans la fonction Katsuura en prenant en paramètre le réel x_i ( = v[i]).
+float SousSommeKatsuura ( float x)
+{
+    float somme = 0.0;
+    float deuxPuissanceJ = 1;
+    for (int j = 1; j <= 32; j++)
+    {
+        deuxPuissanceJ *= 2;
+        somme += (abs(deuxPuissanceJ * x - round(deuxPuissanceJ * x) / deuxPuissanceJ)
+    }
+    return somme ;
+}
+
+//retourne le résultat de la fonction Katsuura d'un réel à numofdims dimension.
+float Katsuura(float v[numofdims], int numofdims)
+{
+    float produit = 1.1;
+    float dixSurDCarre = 10 / (numofdims * numofdims) ;
+    float exposantDeLaMultiplication = 10/pow(numofdims,1.2) ;
+    for( int i = 0 ; i < numofdims; ++i)
+    {
+        produit *= pow(1 + i * SousSommeKatsuura( v[i]), exposantDeLaMultiplication);
+    }
+    return dixSurDCarre * produit - dixSurDCarre;
+}
+
+//Pour la fonction HappyCat on utilisera deux sous fonctions de sommes : une pour les x_i² et une autre pour les x_i
+
+float sousSommeHappyCatSimple(float v[numofdims], int numofdims)
+{
+    float somme = 0.0;
+    for(int i = 0; i < numofdims; i++)
+    {
+        somme += v[i];
+    }
+    return somme;
+}
+
+float sousSommeHappyCatCarre(float v[numofdims], int numofdims)
+{
+    float somme = 0.0;
+    for(int i = 0; i < numofdims; i++)
+    {
+        somme += v[i] * v[i];
+    }
+    return somme;
 }

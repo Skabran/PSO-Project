@@ -10,6 +10,7 @@
 
 const int numofdims = 30;
 const int numofparticles = 50;
+const int numofiterations = 1000;
 
 using namespace std;
 
@@ -35,7 +36,7 @@ float mean(float inputval[], int vallength)
     return (float)(addvalue / vallength);
 }
 
-void PSO(int numofiterations, float c1, float c2,
+void PSO( float c1, float c2,
               float Xmin[numofdims], float Xmax[numofdims], float initialpop[numofparticles][numofdims],
               float worsts[], float meanfits[], float bests[], float *gbestfit, float gbest[numofdims])
 {
@@ -63,7 +64,7 @@ void PSO(int numofiterations, float c1, float c2,
         Vmin[i] = -Vmax[i];
     }
 
-    for(int t = 0; t < 1000; t++)
+    for(int t = 0; t < numofiteratons; t++)
     {
         w = 0.9 - 0.7 * (float) (t / numofiterations);
 
@@ -107,10 +108,10 @@ int main()
     time_t t;
     srand((unsigned) time(&t));
 
-    float xmin[numofdims], xmax[numofdims];
+    float xmin[numofdims], xmax[numofdims]; // Particule la plus mauvaises, la plus mieux
     float initpop[numofparticles][numofdims];
-    float worsts[1000], bests[1000];
-    float meanfits[1000];
+    float worsts[numofiterations], bests[numofiterations]; // La moins bonne (resp. meilleure) particules de chaque itération
+    float meanfits[numofiterations]; //Moyenne pour chaque itérations (meanfits[5]=moyenne de la fitness des particules de la gen 6)
     float gbestfit;
     float gbest[numofdims];
     for(int i = 0; i < numofdims; i++)
@@ -124,8 +125,8 @@ int main()
             initpop[i][j] = rand() % (100 + 100 + 1) - 100;
         }
 
-    PSO(1000, 2, 2, xmin, xmax, initpop, worsts, meanfits, bests, &gbestfit, gbest);
-
+    PSO(2, 2, xmin, xmax, initpop, worsts, meanfits, bests, &gbestfit, gbest);
+    //(nostalgie, suivance, plus nul des particules, plus mieux des particules,....,la meilleure de toutes les itérations)
     cout<<"fitness: "<<gbestfit<<endl;
     return 0;
 }

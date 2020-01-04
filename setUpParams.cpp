@@ -1,4 +1,4 @@
-#include "C:\Users\El\Documents\Mise à niveau informatique\IA\PSO-Project-master\PSO-Project-master\setUpParams.h"
+#include "setUpParams.h"
 
 const unsigned int SetUpParams::independent_runs() const
 {
